@@ -1,0 +1,25 @@
+import java.util.Arrays;
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int start = 1;
+        int end = Arrays.stream(piles).max().orElse(0);
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+
+            if (canEat(piles, h, mid))
+                end = mid - 1;
+            else
+                start = mid + 1;
+        }
+        return start;
+    }
+    private boolean canEat(int[] piles, int h, int speed) {
+        long hours = 0;
+
+        for (int pile : piles) {
+            hours += (pile + speed - 1) / speed;
+        }
+
+        return hours <= h;
+    }
+}
