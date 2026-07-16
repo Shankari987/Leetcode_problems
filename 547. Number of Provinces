@@ -1,0 +1,18 @@
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        int size = isConnected.length,province=0;
+        boolean[]visit = new boolean[size];
+        for(int index=0; index<size;index++)
+            if(!visit[index]){
+                dfs(isConnected,visit,index);
+                province++;
+            }
+        return province;
+    }
+    public static void dfs(int[][] isConnected,boolean[] visit,int cur){
+        visit[cur]=true;
+        for(int col=0;col<isConnected.length;col++)
+            if(isConnected[cur][col]==1&&!visit[col])
+                dfs(isConnected,visit,col);
+    }
+}
