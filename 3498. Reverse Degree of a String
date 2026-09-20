@@ -1,0 +1,19 @@
+class Solution {
+    public int reverseDegree(String s) {
+        Scanner sc= new Scanner(System.in);
+        int sum=0;
+          for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if( ch>='a'&& ch<='z'){
+                int actual=(int)ch-96;
+                int rev_degree=((27)-actual);
+                int actual_pos= (rev_degree*(i+1));
+                sum=sum+actual_pos;
+        }
+
+        }
+        return(sum);
+
+    }
+
+}
