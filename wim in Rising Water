@@ -1,4 +1,5 @@
 class Solution {
+
     public int swimInWater(int[][] grid) {
         int size = grid.length;
         boolean[][] visit = new boolean[size][size];
