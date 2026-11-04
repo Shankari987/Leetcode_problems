@@ -1,0 +1,61 @@
+
+import java.util.*;
+
+class Solution {
+    public long minOperations(int[] nums, int x, int k) {
+
+        int n = nums.length;
+
+        long[] cost = new long[n - x + 1];
+
+        // Find cost of every window
+        for (int i = 0; i <= n - x; i++) {
+
+            int[] arr = Arrays.copyOfRange(nums, i, i + x);
+
+            Arrays.sort(arr);
+
+            int median = arr[x / 2];
+
+            long sum = 0;
+
+            for (int num : arr) {
+                sum += Math.abs((long) num - median);
+            }
+
+            cost[i] = sum;
+        }
+
+        // DP
+        long INF = Long.MAX_VALUE / 2;
+
+        long[][] dp = new long[n + 1][k + 1];
+
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(dp[i], INF);
+        }
+
+        dp[0][0] = 0;
+
+        for (int i = 1; i <= n; i++) {
+
+            for (int j = 0; j <= k; j++) {
+
+                // Skip current element
+                dp[i][j] = dp[i - 1][j];
+
+                // Take a subarray of size x
+                if (j > 0 && i >= x &&
+                    dp[i - x][j - 1] != INF) {
+
+                    dp[i][j] = Math.min(
+                        dp[i][j],
+                        dp[i - x][j - 1] + cost[i - x]
+                    );
+                }
+            }
+        }
+
+        return dp[n][k];
+    }
+}
